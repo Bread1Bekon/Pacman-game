@@ -1,0 +1,133 @@
+#game {
+    min-width: fit-content;
+    max-width: fit-content;
+    height: auto;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+#game-container {
+    padding: auto;
+    margin: auto;
+}
+
+canvas {
+    width: 800px;
+    height: 300px;
+    border-bottom: 5px dashed lightgray;
+    margin: auto;
+}
+
+#game-header {
+    margin: auto;
+}
+
+#counter {
+    margin: auto;
+    padding: 5px;
+    min-width: 50px;
+    width: fit-content;
+    background-color: #F3F4F9;
+    border-radius: 5px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #EAEBF3;
+    color: #E83387;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#tip ul {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 40px;
+}
+
+.tip {
+    margin: auto;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #6B6C71;
+    height: 100%;
+    display: inline-flex;
+}
+
+.tip img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.tip h3 { 
+    align-self: center;
+    margin: 20px;
+}
+
+#leaderboard {
+    max-width: fit-content;
+    display: flex;
+    flex-direction: column;
+}
+
+#leaderboard ol{
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, Helvetica, sans-serif;
+    max-height: fit-content;
+    min-width: 200px;
+    counter-reset: counterName;
+}
+
+#leaderboard li::marker {
+    font-size: x-large;
+    color: #6B6C71;
+}
+
+#leaderboard li {
+    display: inline-flex;
+    height: auto;
+    border-style: solid;
+    border-width: 0px 0px 1px 0px;
+    border-color: #ccccdb;
+    counter-increment: counterName;
+}
+
+
+#leaderboard li:before {
+    content: counter(counterName);
+    color: #6B6C71;
+    font-size: xx-large;
+    font-weight: bold;
+    height: min-content;
+    align-self: center;
+    padding-right: 10px;
+}
+
+#leaderboard h5 {
+    align-self: center;
+}
+
+.score {
+    padding-left: 15px;
+    color: #6B6C71;
+}
+
+#leaderboard a{
+    min-width: 100px;
+    padding: 5px;
+    margin: auto;
+    width: fit-content;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: unset;
+    color: black;
+    border-radius: 15px;
+    border-color: #6B6C71;
+    border-width: 1px;
+    border-style: solid;
+}
+
+#leaderboard a:hover {
+    background-color: #f0f0f0;
+}
