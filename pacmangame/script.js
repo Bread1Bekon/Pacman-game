@@ -7,6 +7,22 @@ pacmanImg.src = "img/pacman.png";
 const pacmanProtImg = new Image();
 pacmanProtImg.src = "img/pacmanprotect.png";
 
+/*
+const animSize = 4
+pacmanAnim = [];
+for (var i = 0; i<animSize; i++)
+{
+    pacmanAnim.push(new Image());
+    pacmanAnim[i].src = "img/pacman/pacman"+i+".png"
+}
+animC = 0
+*/
+
+gameTime = 0
+const animDur = 3
+
+const pacmanHalf = new Image();
+pacmanHalf.src = "img/pacmanhalf.png"
 
 const obstImg = [new Image(), new Image(), new Image()];
 obstImg[0].src = "img/obstacle1.png";
@@ -199,7 +215,8 @@ function endGame()
     gameSpeed = startspeed
     pacmanY = groundY
     pacmanVel = 0
-    ctx.drawImage(pacmanImg, pacmanX, pacmanY, pacman_width, pacman_height);
+    drawPacman()
+    drawRules()
 }
 
 function jumpF()
@@ -214,9 +231,37 @@ function protect()
     protection = true;
 }
 
+function drawPacman(frame=0)
+{
+    ctx.save();
+    ctx.drawImage(pacmanHalf, pacmanX, pacmanY, pacman_width, pacman_height)
+    ctx.translate(pacmanX+pacman_width/2,pacmanY+pacman_height/2)
+    ctx.rotate(Math.PI/3*2+Math.PI/3*frame)//Math.abs(Math.sin(frame)))
+    ctx.translate(-pacmanX-pacman_width/2,-pacmanY-pacman_height/2)
+    ctx.drawImage(pacmanHalf, pacmanX, pacmanY, pacman_width, pacman_height)
+    ctx.restore()
+}
+
+function drawRules()
+{
+    drawX = canvas.width/8
+    drawY = canvas.height/2
+    ctx.fillStyle = "000";
+    ctx.font = "bold 14pt Arial";
+    ctx.fillText("Правила:",drawX,drawY)
+    ctx.fillText("1. Игра запускается на пробел",drawX,drawY+20)
+    ctx.fillText("2.При нажатии ↑ пакмен прыгает, что позволяет избежать препятствия",drawX,drawY+40)
+    ctx.fillText("3. Собирай криптовалюты и набирай очки",drawX,drawY+60)
+    ctx.fillText("4. Избегай AML рисков, спама и поддельных токенов",drawX,drawY+80)
+    ctx.fillText("5. Щит позволяет избежать одного препятствия",drawX,drawY+100)
+    ctx.fillText()
+}
+
 window.onload = function() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(pacmanImg, pacmanX, pacmanY, pacman_width, pacman_height);
+    drawPacman()
+    drawRules();
+    //ctx.drawImage(pacmanImg, pacmanX, pacmanY, pacman_width, pacman_height);
 }
 
 function collisionCheck(entity) {
@@ -252,20 +297,37 @@ function loop() {
     //console.log(time, new Date().getTime(), dt, timeMod)
     time = new Date().getTime();
     timeMod = dt/timed;
+    gameTime = timeMod+gameTime
 
     if (document.hasFocus())
     {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        if (protection)
+        fr = (Math.sin(gameTime*animDur/10)+1)/2//Math.abs(gameTime%(animDur*2)-animDur)// Math.abs(Math.floor((animC/animDur)%(animSize*2-1)-animSize+1))
+        drawPacman(fr)
+
+        //ctx.translate(pacmanX+pacman_width/2, pacmanY+pacman_height/2);
+
+        /*if (protection)
         {
             ctx.drawImage(pacmanProtImg, pacmanX, pacmanY, pacman_width, pacman_height);
         }
         else
         {
             ctx.drawImage(pacmanImg, pacmanX, pacmanY, pacman_width, pacman_height);
-        }
+        }*/
+        /*
+        animFr = Math.abs((Math.floor(animC/animDur))%((animSize-1)*2)-(animSize-1))// Math.abs(Math.floor((animC/animDur)%(animSize*2-1)-animSize+1))
+        console.log(animFr)
+        ctx.drawImage(pacmanAnim[animFr], pacmanX, pacmanY, pacman_width, pacman_height)
+        animC += 1
+        */
 
+
+        if (protection)
+        {
+            ctx.drawImage(pacmanProtImg,pacmanX,pacmanY,pacman_width,pacman_height)
+        }
 
         if (pacmanY + pacmanVel * timeMod < groundY) {
             pacmanVel += pacmanAcc * timeMod;
